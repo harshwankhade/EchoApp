@@ -13,8 +13,8 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class NotificationService extends FirebaseMessagingService {
 
-    private static final String CHANNEL_ID = "WhatsApp_Channel";
-    private static final String CHANNEL_NAME = "WhatsApp Notifications";
+    private static final String CHANNEL_ID = "Echo_Channel";
+    private static final String CHANNEL_NAME = "Echo Notifications";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
