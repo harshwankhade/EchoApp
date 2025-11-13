@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -86,21 +87,37 @@ public class RegisterActivity extends AppCompatActivity {
                            Toast.makeText(RegisterActivity.this, "Error: User not created", Toast.LENGTH_SHORT).show();
                            return;
                        }
-                       String currentUserID = mAuth.getCurrentUser().getUid();
-                       RootRef.child("Users").child(currentUserID).setValue("");
 
-                       FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                       FirebaseUser user = mAuth.getCurrentUser();
+
+                       // Send verification email
+                       user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                            @Override
-                           public void onComplete(@NonNull Task<String> tokenTask) {
-                               if (tokenTask.isSuccessful()) {
-                                   String deviceToken = tokenTask.getResult();
-                                   RootRef.child("Users").child(currentUserID).child("device_token").setValue(deviceToken);
+                           public void onComplete(@NonNull Task<Void> task) {
+                               if (task.isSuccessful()) {
+                                   Toast.makeText(RegisterActivity.this, "Verification email sent. Please check your email.", Toast.LENGTH_LONG).show();
+
+                                   String currentUserID = user.getUid();
+                                   RootRef.child("Users").child(currentUserID).child("email_verified").setValue(false);
+                                   RootRef.child("Users").child(currentUserID).child("email").setValue(email);
+
+                                   FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                                       @Override
+                                       public void onComplete(@NonNull Task<String> tokenTask) {
+                                           if (tokenTask.isSuccessful()) {
+                                               String deviceToken = tokenTask.getResult();
+                                               RootRef.child("Users").child(currentUserID).child("device_token").setValue(deviceToken);
+                                           }
+                                       }
+                                   });
+
+                                   // Redirect to verification screen
+                                   SendUserToEmailVerificationActivity();
+                               } else {
+                                   Toast.makeText(RegisterActivity.this, "Failed to send verification email", Toast.LENGTH_SHORT).show();
                                }
                            }
                        });
-
-                       SendUserToMainActivity();
-                       Toast.makeText(RegisterActivity.this, "Account Created Successfully...", Toast.LENGTH_SHORT).show();
                    }
                    else
                    {
@@ -130,6 +147,13 @@ public class RegisterActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(RegisterActivity.this, MainActivity.class);
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(loginIntent);
+        finish();
+    }
+
+    private void SendUserToEmailVerificationActivity() {
+        Intent verificationIntent = new Intent(RegisterActivity.this, EmailVerificationActivity.class);
+        verificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(verificationIntent);
         finish();
     }
 

@@ -19,15 +19,16 @@
         <activity android:name=".GroupChatActivity" android:exported="false" />
         <activity android:name=".PhoneLoginActivity" android:exported="false" />
         <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity android:name=".EmailVerificationActivity" android:exported="false" />
         <activity android:name=".RegisterActivity" android:exported="false" />
         <activity android:name=".LoginActivity" android:exported="false" />
-        <activity android:name=".MainActivity" android:exported="true">
+        <activity android:name=".SplashActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" android:exported="true" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"

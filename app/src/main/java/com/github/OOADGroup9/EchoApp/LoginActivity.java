@@ -97,6 +97,13 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful())
                     {
+                        // Check if email is verified
+                        if (!mAuth.getCurrentUser().isEmailVerified()) {
+                            Toast.makeText(LoginActivity.this, "Please verify your email first.", Toast.LENGTH_SHORT).show();
+                            mAuth.signOut();
+                            return;
+                        }
+
                         String currentUserId = mAuth.getCurrentUser().getUid();
                         FirebaseMessaging.getInstance().getToken()
                             .addOnCompleteListener(new OnCompleteListener<String>() {

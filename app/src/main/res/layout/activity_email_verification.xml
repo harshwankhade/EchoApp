@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:padding="20dp"
+    tools:context=".EmailVerificationActivity">
+
+    <LinearLayout
+        android:id="@+id/verification_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/email"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="Email verification" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email Verification"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/verification_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A verification email has been sent to your email address.\n\nPlease click the link in the email to verify your account."
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginBottom="40dp" />
+
+        <ProgressBar
+            android:id="@+id/verification_progress_bar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/verify_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="I've Verified My Email"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/buttons"
+            android:layout_marginBottom="15dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Didn't receive an email? Check your spam folder."
+            android:textSize="13sp"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginBottom="20dp" />
+
+        <Button
+            android:id="@+id/go_to_login_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Go to Login"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
